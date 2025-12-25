@@ -127,6 +127,6 @@ public class HTMLGenerator {
     }
 
     private void writeFooter(PrintWriter w) {
-        // Footer already written in writeBody
+       
     }
 }
