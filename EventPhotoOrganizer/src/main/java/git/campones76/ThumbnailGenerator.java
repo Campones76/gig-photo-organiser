@@ -1,8 +1,6 @@
 package git.campones76;
 
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriter;
+import javax.imageio.*;
 import javax.imageio.stream.ImageOutputStream;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,10 +9,26 @@ import java.io.IOException;
 import java.util.Iterator;
 
 /**
- * Handles thumbnail generation
+ * Handles thumbnail generation with configurable quality
  */
 public class ThumbnailGenerator {
     private static final int MAX_THUMBNAIL_SIZE = 300;
+    private final int quality;
+
+    /**
+     * Creates a ThumbnailGenerator with specified quality
+     * @param quality Quality percentage (0-100)
+     */
+    public ThumbnailGenerator(int quality) {
+        this.quality = Math.max(0, Math.min(100, quality));
+    }
+
+    /**
+     * Creates a ThumbnailGenerator with default quality (85%)
+     */
+    public ThumbnailGenerator() {
+        this(85);
+    }
 
     public void createThumbnail(File sourceFile, File destFile) throws IOException {
         BufferedImage originalImage = ImageIO.read(sourceFile);
@@ -46,7 +60,7 @@ public class ThumbnailGenerator {
             // Fallback to JPEG if WebP fails
             File jpegFile = new File(destFile.getParentFile(),
                     destFile.getName().replace(".webp", ".jpg"));
-            ImageIO.write(thumbnail, "jpg", jpegFile);
+            saveAsJPEG(thumbnail, jpegFile);
         }
     }
 
@@ -54,14 +68,42 @@ public class ThumbnailGenerator {
         Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("webp");
         if (writers.hasNext()) {
             ImageWriter writer = writers.next();
+            ImageWriteParam writeParam = writer.getDefaultWriteParam();
+
+            // Set compression quality if supported
+            if (writeParam.canWriteCompressed()) {
+                writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+                writeParam.setCompressionQuality(quality / 100f);
+            }
+
             try (ImageOutputStream ios = ImageIO.createImageOutputStream(destFile)) {
                 writer.setOutput(ios);
-                writer.write(null, new IIOImage(image, null, null),
-                        writer.getDefaultWriteParam());
+                writer.write(null, new IIOImage(image, null, null), writeParam);
                 writer.dispose();
             }
         } else {
             throw new IOException("WebP writer not available");
+        }
+    }
+
+    private void saveAsJPEG(BufferedImage image, File destFile) throws IOException {
+        Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
+        if (writers.hasNext()) {
+            ImageWriter writer = writers.next();
+            ImageWriteParam writeParam = writer.getDefaultWriteParam();
+
+            // Set JPEG compression quality
+            writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            writeParam.setCompressionQuality(quality / 100f);
+
+            try (ImageOutputStream ios = ImageIO.createImageOutputStream(destFile)) {
+                writer.setOutput(ios);
+                writer.write(null, new IIOImage(image, null, null), writeParam);
+                writer.dispose();
+            }
+        } else {
+            // Fallback without compression control
+            ImageIO.write(image, "jpg", destFile);
         }
     }
 }

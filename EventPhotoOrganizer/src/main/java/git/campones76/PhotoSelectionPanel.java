@@ -28,10 +28,12 @@ public class PhotoSelectionPanel extends JPanel {
     private void initializeUI() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setMaximumSize(new Dimension(600, 320));
+        setOpaque(false);
 
         // Button panel with import and clear buttons
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         buttonPanel.setMaximumSize(new Dimension(600, 40));
+        buttonPanel.setOpaque(false);
 
         importButton.addActionListener(e -> {
             if (importListener != null) {
@@ -52,6 +54,7 @@ public class PhotoSelectionPanel extends JPanel {
         add(Box.createVerticalStrut(15));
 
         JLabel photoListLabel = new JLabel("Selected Photos:");
+        photoListLabel.setForeground(Color.WHITE);
         photoListLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         add(photoListLabel);
         add(Box.createVerticalStrut(5));
@@ -60,6 +63,8 @@ public class PhotoSelectionPanel extends JPanel {
         JScrollPane scrollPane = new JScrollPane(photoListArea);
         scrollPane.setMaximumSize(new Dimension(600, 180));
         scrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
         add(scrollPane);
     }
 

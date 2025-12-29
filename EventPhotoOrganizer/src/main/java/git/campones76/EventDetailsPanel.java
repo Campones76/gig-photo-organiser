@@ -26,21 +26,28 @@ public class EventDetailsPanel extends JPanel {
     private void initializeUI() {
         setLayout(new GridLayout(5, 2, 10, 10));
         setMaximumSize(new Dimension(600, 160));
+        setOpaque(false);
 
-        add(new JLabel("Event Name:"));
+        add(createWhiteLabel("Event Name:"));
         add(eventNameField);
 
-        add(new JLabel("Venue:"));
+        add(createWhiteLabel("Venue:"));
         add(venueField);
 
-        add(new JLabel("Location:"));
+        add(createWhiteLabel("Location:"));
         add(locationField);
 
-        add(new JLabel("Event Date (YYYY-MM-DD):"));
+        add(createWhiteLabel("Event Date (YYYY-MM-DD):"));
         add(eventDateField);
 
-        add(new JLabel("Photographer:"));
+        add(createWhiteLabel("Photographer:"));
         add(photographerField);
+    }
+
+    private JLabel createWhiteLabel(String text) {
+        JLabel label = new JLabel(text);
+        label.setForeground(Color.WHITE);
+        return label;
     }
 
     public EventMetadata getEventMetadata() {

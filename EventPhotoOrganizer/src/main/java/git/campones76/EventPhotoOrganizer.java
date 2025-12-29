@@ -1,13 +1,15 @@
 package git.campones76;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.File;
+import javax.sound.sampled.*;
+import java.io.InputStream;
 
 /**
  * Main application class for the Event Photo Organizer
@@ -15,29 +17,97 @@ import java.io.File;
 public class EventPhotoOrganizer extends JFrame {
     private final EventDetailsPanel detailsPanel;
     private final PhotoSelectionPanel photoPanel;
+    private final QualityControlPanel qualityPanel;
     private final JLabel statusLabel;
     private final List<File> selectedPhotos;
+    private Image backgroundImage;
 
     public EventPhotoOrganizer() {
         selectedPhotos = new ArrayList<>();
         detailsPanel = new EventDetailsPanel();
         photoPanel = new PhotoSelectionPanel();
+        qualityPanel = new QualityControlPanel();
         statusLabel = new JLabel(" ");
+        loadBackgroundImage();
         initializeUI();
         setupMacOSIntegration();
     }
 
+    private void loadBackgroundImage() {
+        try {
+            InputStream bgStream = getClass().getResourceAsStream("/assets/img/lenin.png");
+            if (bgStream != null) {
+                backgroundImage = ImageIO.read(bgStream);
+            }
+        } catch (IOException e) {
+            System.err.println("Could not load background image: " + e.getMessage());
+        }
+    }
+
+    private void playSound() {
+        try {
+            InputStream audioSource = getClass().getResourceAsStream("/assets/audio/Grouch.wav");
+            if (audioSource == null) return;
+
+            InputStream bufferedIn = new java.io.BufferedInputStream(audioSource);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(bufferedIn);
+            Clip Ipod = AudioSystem.getClip();
+            Ipod.open(audioStream);
+            Ipod.start();
+        } catch (Exception e) {
+            System.err.println("D= Error playing sound: " + e.getMessage());
+        }
+
+    }
+
+
     private void initializeUI() {
         setTitle("Event Photo Organizer");
-        setSize(700, 700);
+        setSize(700, 780);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
+        // Create custom content pane with background
+        JPanel contentPane = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                if (backgroundImage != null) {
+                    Graphics2D g2d = (Graphics2D) g.create();
+
+                    // High-quality rendering hints
+                    g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+                    g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+                    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                    // Tile size (scaled down)
+                    int tileWidth = 64;
+                    int tileHeight = 64;
+
+                    int cols = (getWidth() + tileWidth - 1) / tileWidth;
+                    int rows = (getHeight() + tileHeight - 1) / tileHeight;
+
+                    for (int row = 0; row < rows; row++) {
+                        for (int col = 0; col < cols; col++) {
+                            int x = col * tileWidth;
+                            int y = row * tileHeight;
+                            g2d.drawImage(backgroundImage, x, y, tileWidth, tileHeight, null);
+                        }
+                    }
+
+                    g2d.dispose();
+                }
+            }
+        };
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.setOpaque(false);
+        setContentPane(contentPane);
 
         add(Box.createVerticalStrut(20));
 
         // Title
         JLabel titleLabel = new JLabel("Event Photo Organizer");
         titleLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 24));
+        titleLabel.setForeground(Color.WHITE);
         titleLabel.setAlignmentX(CENTER_ALIGNMENT);
         add(titleLabel);
         add(Box.createVerticalStrut(20));
@@ -54,6 +124,11 @@ public class EventPhotoOrganizer extends JFrame {
         add(photoPanel);
         add(Box.createVerticalStrut(15));
 
+        // Quality control panel
+        qualityPanel.setAlignmentX(CENTER_ALIGNMENT);
+        add(qualityPanel);
+        add(Box.createVerticalStrut(15));
+
         // Organize button
         JButton organizeButton = new JButton("Organize Photos & Generate HTML");
         organizeButton.setAlignmentX(CENTER_ALIGNMENT);
@@ -62,7 +137,7 @@ public class EventPhotoOrganizer extends JFrame {
 
         // Status label
         statusLabel.setAlignmentX(CENTER_ALIGNMENT);
-        statusLabel.setForeground(new java.awt.Color(0, 128, 0));
+        statusLabel.setForeground(Color.WHITE);
         add(Box.createVerticalStrut(10));
         add(statusLabel);
 
@@ -120,12 +195,12 @@ public class EventPhotoOrganizer extends JFrame {
     }
 
     /**
-     * Shows the About dialog
+     * Shows the About dialog with black background and white text
      */
     private void showAboutDialog() {
         String aboutMessage = """
                 Event Photo Organizer
-                Version 1.0
+                Version 1.1
                 
                 A very narrow minded tool for organizing event photos and generating
                 beautiful HTML galleries with thumbnails.
@@ -138,20 +213,50 @@ public class EventPhotoOrganizer extends JFrame {
                 Features:
                 • Automatic photo organization
                 • Thumbnail generation (WebP format)
+                • Adjustable thumbnail quality
                 • Responsive HTML gallery creation
                 • Event metadata management
                 
                 © 2025 Gabe Fernando
                 """;
 
-        JOptionPane.showMessageDialog(
-                this,
-                aboutMessage,
-                "About Event Photo Organizer",
-                JOptionPane.INFORMATION_MESSAGE
-        );
-    }
 
+        JTextArea aboutText = new JTextArea(aboutMessage);
+        aboutText.setEditable(false);
+        aboutText.setForeground(Color.WHITE);
+        aboutText.setBackground(Color.BLACK);
+        aboutText.setFont(new Font ("Arial", Font.PLAIN, 12));
+        aboutText.setMargin(new Insets(10, 10, 10, 10));
+
+        JLabel link = new JLabel("<html><a href=''>WEBSITE</a></html>");
+        link.setForeground(Color.WHITE);
+        link.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        link.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                try {
+                    Desktop.getDesktop().browse(new java.net.URI("https://splash.gabefernando.net"));
+                } catch (Exception e) {
+                    System.err.println("Could not open browser: " + e.getMessage());
+                }
+            }
+        });
+
+        JPanel aboutPanel = new JPanel(new BorderLayout(5, 5));
+        aboutPanel.setBackground(Color.BLACK);
+        aboutPanel.add(aboutText, BorderLayout.CENTER);
+
+        JPanel linkPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        linkPanel.setBackground(Color.BLACK);
+        linkPanel.add(link);
+        aboutPanel.add(linkPanel, BorderLayout.SOUTH);
+
+        JOptionPane optionPane = new JOptionPane(aboutPanel, JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = optionPane.createDialog("Credits");
+        dialog.getContentPane().setBackground(Color.BLACK);
+        dialog.setVisible(true);
+
+    }
     private void importPhotos() {
         List<File> files = photoPanel.selectPhotos(this);
         if (files != null && !files.isEmpty()) {
@@ -166,19 +271,25 @@ public class EventPhotoOrganizer extends JFrame {
         if (selectedPhotos.isEmpty()) {
             return;
         }
-
+        ImageIcon rubbishBinIcon_og = new ImageIcon("src/main/resources/assets/img/FullTrashIcon.png");
+        Image scaledImage = rubbishBinIcon_og.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon rubbishBinIcon = new ImageIcon(scaledImage);
         int result = JOptionPane.showConfirmDialog(
                 this,
-                "Are you sure you want to clear all selected photos?",
-                "Clear Photos",
+                "Are you sure you want to clear all selected photos?\n(You can’t undo this action.)",
+                "Clear Selection",
                 JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE
+                JOptionPane.QUESTION_MESSAGE,
+                rubbishBinIcon
         );
 
         if (result == JOptionPane.YES_OPTION) {
             selectedPhotos.clear();
             photoPanel.clearPhotoList();
             statusLabel.setText("All photos cleared");
+
+            //Play sound
+            playSound();
         }
     }
 
@@ -202,7 +313,8 @@ public class EventPhotoOrganizer extends JFrame {
 
         File destinationDir = selectDestinationDirectory();
         if (destinationDir != null) {
-            PhotoOrganizer organizer = new PhotoOrganizer(selectedPhotos, metadata);
+            int quality = qualityPanel.getQuality();
+            PhotoOrganizer organizer = new PhotoOrganizer(selectedPhotos, metadata, quality);
             organizer.organize(this, destinationDir, (success, message) -> {
                 if (success) {
                     statusLabel.setText("Successfully organized " + selectedPhotos.size() +

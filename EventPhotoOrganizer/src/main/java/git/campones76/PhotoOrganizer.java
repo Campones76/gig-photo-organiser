@@ -15,10 +15,12 @@ import java.util.function.BiConsumer;
 public class PhotoOrganizer {
     private final List<File> photos;
     private final EventMetadata metadata;
+    private final int quality;
 
-    public PhotoOrganizer(List<File> photos, EventMetadata metadata) {
+    public PhotoOrganizer(List<File> photos, EventMetadata metadata, int quality) {
         this.photos = photos;
         this.metadata = metadata;
+        this.quality = quality;
     }
 
     public void organize(Component parent, File baseDir, BiConsumer<Boolean, String> callback) {
@@ -57,7 +59,7 @@ public class PhotoOrganizer {
             protected Void doInBackground() throws Exception {
                 int progress = 0;
                 int count = 1;
-                ThumbnailGenerator thumbnailGen = new ThumbnailGenerator();
+                ThumbnailGenerator thumbnailGen = new ThumbnailGenerator(quality);
 
                 for (File photo : photos) {
                     String extension = FileUtils.getFileExtension(photo.getName());
@@ -91,8 +93,8 @@ public class PhotoOrganizer {
             protected void process(List<Integer> chunks) {
                 int latest = chunks.get(chunks.size() - 1);
                 progressBar.setValue(latest);
-                progressLabel.setText(String.format("Processing photo %d of %d...",
-                        (latest + 1) / 2, photos.size()));
+                progressLabel.setText(String.format("Processing photo %d of %d (Quality: %d%%)...",
+                        (latest + 1) / 2, photos.size(), quality));
             }
 
             @Override
@@ -102,7 +104,8 @@ public class PhotoOrganizer {
                     get();
                     callback.accept(true,
                             "Photos organized, thumbnails created, and HTML generated successfully!\n\n" +
-                                    "Location: " + destDir.getAbsolutePath() + "\nHTML file: index.html");
+                                    "Location: " + destDir.getAbsolutePath() + "\nHTML file: index.html\n" +
+                                    "Thumbnail quality: " + quality + "%");
                 } catch (Exception ex) {
                     callback.accept(false, "Error processing photos: " + ex.getMessage());
                 }
