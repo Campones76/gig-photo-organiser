@@ -271,9 +271,17 @@ public class EventPhotoOrganizer extends JFrame {
         if (selectedPhotos.isEmpty()) {
             return;
         }
-        ImageIcon rubbishBinIcon_og = new ImageIcon("src/main/resources/assets/img/FullTrashIcon.png");
-        Image scaledImage = rubbishBinIcon_og.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
-        ImageIcon rubbishBinIcon = new ImageIcon(scaledImage);
+        ImageIcon rubbishBinIcon = null;
+        try {
+            InputStream iconStream = getClass().getResourceAsStream("/assets/img/FullTrashIcon.png");
+            if (iconStream != null) {
+                Image rubbishBinIcon_og = ImageIO.read(iconStream);
+                Image scaledImage = rubbishBinIcon_og.getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+                rubbishBinIcon = new ImageIcon(scaledImage);
+            }
+        } catch (IOException e) {
+            System.err.println("Could not load trash icon: " + e.getMessage());
+        }
         int result = JOptionPane.showConfirmDialog(
                 this,
                 "Are you sure you want to clear all selected photos?\n(You can’t undo this action.)",
