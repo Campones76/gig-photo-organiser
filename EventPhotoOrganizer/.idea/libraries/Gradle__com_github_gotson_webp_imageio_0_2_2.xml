@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.gotson:webp-imageio:0.2.2" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.github.gotson" artifactId="webp-imageio" version="0.2.2" baseVersion="0.2.2" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.gotson/webp-imageio/0.2.2/a0f92b52fdf3f698433371306b619f10847ec36e/webp-imageio-0.2.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="be366ff8-2cdc-4447-bcec-e5c0bcf54da1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/img/background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/img/metro_9.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/git/campones76/EventDetailsPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/git/campones76/EventDetailsPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/git/campones76/EventPhotoOrganizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/git/campones76/EventPhotoOrganizer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/git/campones76/PhotoSelectionPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/git/campones76/PhotoSelectionPanel$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/git/campones76/PhotoSelectionPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/git/campones76/PhotoSelectionPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/git/campones76/EventDetailsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/git/campones76/EventDetailsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/git/campones76/EventPhotoOrganizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/git/campones76/EventPhotoOrganizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/git/campones76/PhotoSelectionPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/git/campones76/PhotoSelectionPanel.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="37MGgur0NC2tjvZGMQzlfR3NqJX" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.EventPhotoOrganizer.executor": "Run",
+    "Gradle.EventPhotoOrganizer [:git.campones76.EventPhotoOrganizer.main()].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/music/Documents/Github/gig-photo-organiser/EventPhotoOrganizer",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/assets/img" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="WebGallery" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="WebGallery" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.25410.129" />
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-IU-251.25410.129" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="be366ff8-2cdc-4447-bcec-e5c0bcf54da1" name="Changes" comment="" />
+      <created>1766705640350</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1766705640350</updated>
+      <workItem from="1766705641475" duration="3101000" />
+      <workItem from="1768864667303" duration="1951000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

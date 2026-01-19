@@ -15,7 +15,7 @@ public class QualityControlPanel extends JPanel {
     public QualityControlPanel() {
         qualitySlider = new JSlider(JSlider.HORIZONTAL, 0, 100, DEFAULT_QUALITY);
         qualityLabel = new JLabel(DEFAULT_QUALITY + "%");
-        autoButton = new JButton("Auto");
+        autoButton = new JButton("Default");
         initializeUI();
     }
 

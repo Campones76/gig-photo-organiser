@@ -62,7 +62,7 @@ public class EventPhotoOrganizer extends JFrame {
 
 
     private void initializeUI() {
-        setTitle("Event Photo Organizer");
+        setTitle("Web Gallery");
         setSize(700, 780);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -105,11 +105,11 @@ public class EventPhotoOrganizer extends JFrame {
         add(Box.createVerticalStrut(20));
 
         // Title
-        JLabel titleLabel = new JLabel("Event Photo Organizer");
+        /*JLabel titleLabel = new JLabel("Web Gallery");
         titleLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 24));
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setAlignmentX(CENTER_ALIGNMENT);
-        add(titleLabel);
+        add(titleLabel);*/
         add(Box.createVerticalStrut(20));
 
         // Details panel
@@ -199,14 +199,14 @@ public class EventPhotoOrganizer extends JFrame {
      */
     private void showAboutDialog() {
         String aboutMessage = """
-                Event Photo Organizer
-                Version 1.1
+                Web Gallery
+                Version 1.3
                 
-                A very narrow minded tool for organizing event photos and generating
+                A very simple tool for organizing event photos and generating
                 beautiful HTML galleries with thumbnails.
                 I made this as a replacement for the web export feature of Apple Aperture.
                 
-                I made this little program specifically to cover my needs, and to automate 
+                I made this little program specifically to cover my need to automate 
                 something I had to do manually, idk if it's of any use to you guys but 
                 fell free to modify it to your liking.
                 
@@ -217,7 +217,7 @@ public class EventPhotoOrganizer extends JFrame {
                 • Responsive HTML gallery creation
                 • Event metadata management
                 
-                © 2025 Gabe Fernando
+                © 2026 Gabe Fernando
                 """;
 
 
@@ -364,7 +364,7 @@ public class EventPhotoOrganizer extends JFrame {
         // Set macOS system properties before creating UI
         if (System.getProperty("os.name").toLowerCase().contains("mac")) {
             System.setProperty("apple.laf.useScreenMenuBar", "true");
-            System.setProperty("apple.awt.application.name", "Event Photo Organizer");
+            System.setProperty("apple.awt.application.name", "Web Gallery");
         }
 
         SwingUtilities.invokeLater(() -> {
